@@ -65,10 +65,7 @@ int main()
     cout << "Enter element to search: ";
     cin >> key;
 
-    int position;
-
-            return 0;
-}                               
+    int position;                           
 
 
 // Linear Search
@@ -107,6 +104,9 @@ int main()
     cout << "Time Taken : "
          << duration_cast<microseconds>(finish - begin).count()
          << " microseconds" << endl;
+
+    return  0;
+}
 
 
 
