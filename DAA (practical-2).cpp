@@ -1,10 +1,11 @@
+
 #include <iostream>
 #include <chrono>
 
 using namespace std;
 using namespace chrono;
 
-// Linear Search Function
+// Linear Search: Checks each element one by one
 int linearSearch(int arr[], int n, int key)
 {
     int i = 0;
@@ -13,16 +14,16 @@ int linearSearch(int arr[], int n, int key)
     {
         if (arr[i] == key)
         {
-            return i;
+            return i; // Return index if element is found
         }
-        i++;
+        i++; // Move to next element
     }
 
-    return -1;
+    return -1; // Return -1 if element is not found
 }
 
 
-// Binary Search Function
+// Binary Search: Finds element by repeatedly dividing the search range
 int binarySearch(int arr[], int n, int key)
 {
     int first = 0;
@@ -30,32 +31,32 @@ int binarySearch(int arr[], int n, int key)
 
     while (first <= last)
     {
-        int middle = (first + last) / 2;
+        int middle = (first + last) / 2; // Find middle index
 
         if (arr[middle] == key)
         {
-            return middle;
+            return middle; // Element found
         }
         else if (key > arr[middle])
         {
-            first = middle + 1;
+            first = middle + 1; // Search right half
         }
         else
         {
-            last = middle - 1;
+            last = middle - 1; // Search left half
         }
     }
 
-    return -1;
+    return -1; // Element not found
 }
 
 
 int main()
 {
-    const int SIZE = 100000;
+    const int SIZE = 100000; // Total number of elements
     int arr[SIZE];
 
-    // Store values from 1 to 100000
+    // Store sorted values from 1 to 100000
     for (int i = 0; i < SIZE; i++)
     {
         arr[i] = i + 1;
@@ -63,12 +64,11 @@ int main()
 
     int key;
     cout << "Enter element to search: ";
-    cin >> key;
+    cin >> key; // Get search element from user
 
-    int position;                           
+    int position;
 
-
-// Linear Search
+    // Linear Search and execution time calculation
     auto begin = high_resolution_clock::now();
 
     position = linearSearch(arr, SIZE, key);
@@ -77,17 +77,19 @@ int main()
 
     cout << "\nLinear Search" << endl;
 
+    // Display search result
     if (position != -1)
         cout << "Element found at index " << position << endl;
     else
         cout << "Element not found" << endl;
 
+    // Display Linear Search execution time
     cout << "Time Taken : "
          << duration_cast<microseconds>(finish - begin).count()
          << " microseconds" << endl;
 
 
-// Binary Search
+    // Binary Search and execution time calculation
     begin = high_resolution_clock::now();
 
     position = binarySearch(arr, SIZE, key);
@@ -96,17 +98,16 @@ int main()
 
     cout << "\nBinary Search" << endl;
 
+    // Display search result
     if (position != -1)
         cout << "Element found at index " << position << endl;
     else
         cout << "Element not found" << endl;
 
+    // Display Binary Search execution time
     cout << "Time Taken : "
          << duration_cast<microseconds>(finish - begin).count()
          << " microseconds" << endl;
 
-    return  0;
+    return 0; // End program
 }
-
-
-
