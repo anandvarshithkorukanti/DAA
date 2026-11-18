@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include <vector>
 #include <climits>
@@ -6,37 +7,38 @@
 using namespace std;
 using namespace chrono;
 
-// Function for Matrix Chain Multiplication
+// Function for Matrix Chain Multiplication using DP
 int matrixChainMultiplication(vector<int> p, int n)
 {
-    // dp[i][j] = minimum cost
+    // Store minimum multiplication cost
     vector<vector<int>> dp(n, vector<int>(n, 0));
 
-    // length = number of matrices
+    // Check different chain lengths
     for (int length = 2; length < n; length++)
     {
         for (int i = 1; i < n - length + 1; i++)
         {
-            int j = i + length - 1;
+            int j = i + length - 1; // Calculate ending index
 
-            dp[i][j] = INT_MAX;
+            dp[i][j] = INT_MAX; // Initialize minimum cost
 
             // Try all possible splitting points
             for (int k = i; k < j; k++)
             {
+                // Calculate cost of left, right and final multiplication
                 int cost = dp[i][k]
                          + dp[k + 1][j]
                          + p[i - 1] * p[k] * p[j];
 
                 if (cost < dp[i][j])
                 {
-                    dp[i][j] = cost;
+                    dp[i][j] = cost; // Update minimum cost
                 }
             }
         }
     }
 
-    return dp[1][n - 1];
+    return dp[1][n - 1]; // Return minimum multiplication cost
 }
 
 int main()
@@ -56,10 +58,10 @@ int main()
     if (matrices <= 0)
     {
         cout << "Number of matrices must be greater than 0.\n";
-        return 0;
+        return 0; // Stop program
     }
 
-    // Number of dimensions = matrices + 1
+    // Number of dimensions = number of matrices + 1
     vector<int> dimensions(matrices + 1);
 
     cout << "\nEnter " << matrices + 1 << " dimensions:\n";
@@ -69,13 +71,13 @@ int main()
     cout << "A3 = 30 x 40\n";
     cout << "Enter: 10 20 30 40\n\n";
 
-    // Take dimensions from user
+    // Read matrix dimensions from user
     for (int i = 0; i <= matrices; i++)
     {
         cin >> dimensions[i];
     }
 
-    // Display matrices
+    // Display matrix dimensions
     cout << "\nMatrices are:\n";
 
     for (int i = 0; i < matrices; i++)
@@ -85,20 +87,21 @@ int main()
              << dimensions[i + 1] << endl;
     }
 
-    // Start execution time
+    // Start measuring execution time
     auto start = high_resolution_clock::now();
 
     // Calculate minimum multiplication cost
     int result =
         matrixChainMultiplication(dimensions, matrices + 1);
 
-    // End execution time
+    // Stop measuring execution time
     auto end = high_resolution_clock::now();
 
-    // Calculate execution time
+    // Calculate total execution time in microseconds
     auto executionTime =
         duration_cast<microseconds>(end - start);
 
+    // Display final result
     cout << "\n============================================\n";
     cout << "                 RESULT\n";
     cout << "============================================\n";
@@ -112,5 +115,5 @@ int main()
 
     cout << "============================================\n";
 
-    return 0;
+    return 0; // End program
 }
